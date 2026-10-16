@@ -45,6 +45,17 @@ export default function AmazonConnectWidget() {
       "application/vnd.amazonaws.connect.message.interactive",
       "application/vnd.amazonaws.connect.message.interactive.response",
     ]);
+    w.amazon_connect("authenticate", (callback: (token: string) => void) => {
+      window
+        .fetch("/api/connect-token")
+        .then((res) => res.json())
+        .then((body: { data?: string }) => {
+          if (body.data) callback(body.data);
+        })
+        .catch(() => {
+          // Widget shows its own error if the token never arrives.
+        });
+    });
   }, []);
 
   return null;
