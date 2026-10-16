@@ -60,7 +60,7 @@ export default function PortfolioAIChat() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 12, scale: 0.96 }}
             transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed bottom-24 right-4 z-[70] flex h-[min(520px,72vh)] w-[min(400px,calc(100vw-2rem))] flex-col overflow-hidden rounded-2xl border border-cyan-500/25 bg-zinc-950/95 shadow-2xl shadow-cyan-500/10 backdrop-blur-xl sm:right-6"
+            className="fixed bottom-24 left-4 z-[70] flex h-[min(520px,72vh)] w-[min(400px,calc(100vw-2rem))] flex-col overflow-hidden rounded-2xl border border-cyan-500/25 bg-zinc-950/95 shadow-2xl shadow-cyan-500/10 backdrop-blur-xl sm:left-6"
           >
             <header className="flex items-center justify-between border-b border-white/10 bg-gradient-to-r from-cyan-950/80 to-purple-950/60 px-4 py-3">
               <motion.div
@@ -164,7 +164,7 @@ export default function PortfolioAIChat() {
         )}
       </AnimatePresence>
 
-      <motion.div className="fixed bottom-6 right-4 z-[70] sm:right-6">
+      <motion.div className="fixed bottom-6 left-4 z-[70] sm:left-6">
         <PremiumButton
           type="button"
           variant="primary"

@@ -3,17 +3,13 @@
 import { Geist, Geist_Mono } from "next/font/google";
 
 
-import dynamic from "next/dynamic";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import LoadingScreen from "@/components/LoadingScreen";
 import PortfolioAIChat from "@/components/PortfolioAIChat";
+import AmazonConnectWidget from "@/components/AmazonConnectWidget";
 import useShowLoader from "@/hooks/useShowLoader";
 import "./globals.css";
-
-const ConnectSupportChat = dynamic(() => import("@/components/ConnectSupportChat"), {
-  ssr: false,
-});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,12 +34,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           {!showLoader && children}
         </main>
         <Footer />
-        {!showLoader && (
-          <>
-            <ConnectSupportChat />
-            <PortfolioAIChat />
-          </>
-        )}
+        {!showLoader && <PortfolioAIChat />}
+        <AmazonConnectWidget />
       </body>
     </html>
   );
