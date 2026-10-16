@@ -26,10 +26,10 @@ export default function Navbar() {
     <>
       <nav className="fixed top-4 left-1/2 z-50 flex w-[calc(100%-1.5rem)] max-w-5xl -translate-x-1/2 items-center justify-between gap-3 rounded-full border border-white/20 bg-white/10 px-3 py-2.5 shadow-lg backdrop-blur-lg sm:top-6 sm:gap-4 sm:px-6 sm:py-3">
         <a
-          href="https://iparx-media-akashpandeyweconnect-6582s-projects.vercel.app/"
+          href="https://pexbit-media.vercel.app/"
           target="_blank"
           rel="noopener noreferrer"
-          className="relative shrink-0 rounded-lg border-2 border-cyan-400 px-3 py-1.5 text-xs font-extrabold tracking-wide text-cyan-400 transition-colors duration-300 hover:border-red-500 sm:px-5 sm:py-2 sm:text-base"
+          className="relative shrink-0 rounded-lg border-2 border-cyan-400 px-2.5 py-1.5 text-[10px] font-extrabold tracking-wide text-cyan-400 transition-colors duration-300 hover:border-red-500 sm:px-4 sm:py-2 sm:text-sm"
           style={{ fontFamily: "Poppins, sans-serif", background: "none", boxShadow: "none", whiteSpace: "nowrap" }}
         >
           <motion.span
@@ -37,9 +37,9 @@ export default function Navbar() {
             animate={{ scale: [1, 1.13, 1], color: ["#22d3ee", "#06b6d4", "#22d3ee"] }}
             transition={{ duration: 1.1, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
             className="inline-block w-full text-center"
-            style={{ letterSpacing: "0.08em" }}
+            style={{ letterSpacing: "0.04em" }}
           >
-            OUR BRAND
+            BRANDING PROJECT
           </motion.span>
         </a>
 

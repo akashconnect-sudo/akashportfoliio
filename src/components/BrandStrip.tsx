@@ -3,7 +3,7 @@ import React, { useState } from "react";
 
 
 const brands = [
-  { name: "IPARX MEDIA" },
+  { name: "PEXBIT MEDIA" },
   { name: "AR GROUP" },
   { name: "COLLEGE DUNIYA" },
   { name: "Ceya" },

@@ -54,12 +54,12 @@ export default function ContactSection() {
       </motion.div>
       {/* Place logo further below the card, always centered */}
       <div className="block md:hidden w-full flex justify-center mt-6 xs:mt-8">
-        <div className="max-w-[180px] xs:max-w-[220px] w-full h-auto">
+        <div className="w-full h-auto">
           <IparxMediaLogo />
         </div>
       </div>
       <div className="hidden md:flex w-full justify-center mt-8 sm:mt-[4.5rem]">
-        <div className="max-w-[220px] w-full h-auto">
+        <div className="w-full h-auto">
           <IparxMediaLogo />
         </div>
       </div>

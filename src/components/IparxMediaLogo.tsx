@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 export default function IparxMediaLogo() {
   return (
     <motion.a
-      href="https://iparx-media-akashpandeyweconnect-6582s-projects.vercel.app/" // Change to your actual link
+      href="https://pexbit-media.vercel.app/"
       target="_blank"
       rel="noopener noreferrer"
       initial={{ opacity: 0, scale: 0.8 }}
@@ -21,7 +21,7 @@ export default function IparxMediaLogo() {
           letterSpacing: "-0.04em",
         }}
       >
-        IPARX
+        PEXBIT
       </span>
       <span
         className="font-extrabold text-[2.8rem] md:text-[4rem] text-white group-hover:text-purple-400 transition-colors duration-200"

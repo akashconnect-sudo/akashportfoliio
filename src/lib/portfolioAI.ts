@@ -22,10 +22,10 @@ const profile = {
     "AI: Nexiora AI — evidence-first search with citations & SSE streaming",
   ],
   projects: [
+    "Sales Lead CRM — Amazon Connect IVR, hosted on AWS EC2 (salesleadcrm.duckdns.org)",
     "Nexiora AI — evidence-first AI research platform (Next.js + NestJS)",
-    "Sales CRM SaaS with Amazon Connect integration",
     "Modern Portfolio (Next.js + Framer Motion + Live Connect chat)",
-    "IPARX MEDIA, AR Group of Education, Movatobags, College Dunias",
+    "Pexbit Media, Wokora Foods, AR Group of Education, Movatobags, College Dunias",
   ],
 };
 

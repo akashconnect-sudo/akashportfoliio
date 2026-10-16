@@ -96,6 +96,24 @@ const projects = [
 
   {
 
+    title: "Sales Lead CRM",
+
+    image: "/sales-lead-crm.jpg",
+
+    description:
+
+      "Production CRM for Indian sales teams: one desk for leads, owners, follow-ups, and click-to-call. Amazon Connect runs the contact center — IVR menus, call recording, and routing — so agents dial from the lead profile and every call lands on the timeline. Hosted on AWS EC2 with Next.js, TypeScript, PostgreSQL, Prisma, and Lambda integrations.",
+
+    tech: ["Next.js", "React", "TypeScript", "Node.js", "PostgreSQL", "Prisma", "Amazon Connect", "IVR", "AWS Lambda", "EC2"],
+
+    demo: "https://salesleadcrm.duckdns.org/",
+
+    github: "https://github.com/akash-cyber-stack/Client-CRM-software",
+
+  },
+
+  {
+
     title: "Nexiora AI — Evidence-First AI Research Platform",
 
     image: "/nexiora-ai.png",
@@ -132,19 +150,33 @@ const projects = [
 
   {
 
-    title: "IPARX MEDIA",
+    title: "Pexbit Media",
 
-    image: "/IPARX.jpg",
+    image: "/pexbit-media.jpg",
 
     description:
 
-      "IPARX MEDIA is a fast-growing digital solutions startup focused on transforming brands into powerful digital leaders.",
+      "Personal branding studio for founders, coaches, consultants, creators, and executives — positioning, content systems, and a full marketing + web presence.",
 
-    tech: ["React", "Next.js", "Framer Motion", "TypeScript", "GitHub", "Vercel"],
+    tech: ["Next.js", "React", "TypeScript", "Tailwind", "Vercel"],
 
-    github: "https://github.com/Akash12876/client-project",
+    demo: "https://pexbit-media.vercel.app/",
 
-    demo: "https://iparx-media-akashpandeyweconnect-6582s-projects.vercel.app/",
+  },
+
+  {
+
+    title: "Wokora Foods",
+
+    image: "/wokora-foods.png",
+
+    description:
+
+      "Restaurant site for Wokora Foods — menu, online ordering, cafe hours, and a night-dining experience built around Good Food. Better Mood.",
+
+    tech: ["Next.js", "React", "TypeScript", "Tailwind"],
+
+    demo: "https://wokorafoods.com/",
 
   },
 
@@ -213,23 +245,6 @@ const projects = [
     tech: ["Shopify", "Liquid", "PHP", "Payment Integration"],
 
     demo: "https://movatobags.com/",
-
-  },
-
-  {
-
-    title: "Sales CRM IPI",
-
-    image: "/CRM.png",
-
-    description:
-
-      "A modern CRM web app for sales teams, featuring authentication, dashboards, and lead management. Built with Next.js and deployed on Vercel.",
-
-    tech: ["Next.js", "React", "TypeScript", "Tailwind", "Vercel", "Neon DB", "Prisma"],
-
-    demo: "https://sales-crm-ipi.vercel.app/login",
-    github: "https://github.com/akash-cyber-stack/Client-CRM-software",
 
   },
 
