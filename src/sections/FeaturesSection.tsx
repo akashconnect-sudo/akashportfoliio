@@ -1,18 +1,19 @@
 "use client";
+
 import React from "react";
-import { motion } from "framer-motion";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 const features = [
   {
     title: "Website Development",
-    desc: "Modern, fast websites with React, Next.js, and clean UI — built for performance and growth.",
+    desc: "Modern, fast sites with React and Next.js — clean UI, strong performance, ready to grow.",
     img: "/OIP.webp",
     alt: "Website Development",
   },
   {
     title: "Amazon Connect",
-    desc: "Cloud contact centers with Amazon Connect — IVR, routing, CCP, Contact Lens, and AWS integrations.",
+    desc: "Cloud contact centers — IVR, routing, CCP, Contact Lens, Lex, and AWS integrations that agents actually use.",
     img: "/amazon-connect.png",
     alt: "Amazon Connect",
   },
@@ -20,60 +21,49 @@ const features = [
 
 export default function FeaturesSection() {
   return (
-    <section id="features" className="w-full py-20 px-4 sm:px-8 flex flex-col items-center bg-[#101014]">
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7 }}
-        viewport={{ once: true }}
-        className="mb-10"
-      >
-        <span className="block mx-auto mb-4 px-6 py-2 rounded-full bg-zinc-900 text-zinc-200 font-medium shadow text-sm w-fit">
-          Features
-        </span>
-        <h2 className="text-4xl sm:text-5xl font-semibold text-white text-center mb-2 leading-tight">
-          Streamline Business with our <br className="hidden sm:block" />
-          Flexible Options
-        </h2>
-      </motion.div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 w-full max-w-5xl">
-        {features.map((f, i) => (
-          <motion.div
-            key={f.title}
-            initial={{ opacity: 0, scale: 0.95, y: 30 }}
-            whileInView={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: i * 0.15 }}
-            viewport={{ once: true }}
-            whileHover={{
-              scale: 1.08,
-              boxShadow: "0 16px 48px 0 rgba(0,0,0,0.25)",
-              y: -18,
-            }}
-            className="group bg-white/10 rounded-2xl border-2 border-white/30 shadow-2xl p-8 flex flex-col items-center transition-all duration-300 font-[Poppins,sans-serif] relative overflow-hidden"
-            style={{
-              boxShadow: "0 8px 32px 0 rgba(31,38,135,0.18)",
-            }}
-          >
-            {/* Glassy border overlay only on border */}
-            <div className="pointer-events-none absolute inset-0 rounded-2xl z-20" style={{boxShadow:'0 0 0 4px rgba(255,255,255,0.18)', border:'2px solid rgba(255,255,255,0.25)', backdropFilter:'blur(8px)', WebkitBackdropFilter:'blur(8px)', mixBlendMode:'lighten'}} />
-            <div className="relative z-30 w-full flex justify-center mb-6">
-              <div className="w-[360px] h-[220px] flex items-center justify-center overflow-hidden rounded-xl border border-white/10 bg-zinc-950">
+    <section id="features" className="scroll-mt-28 bg-zinc-950 px-4 py-20 sm:px-8 sm:py-24">
+      <div className="mx-auto max-w-6xl">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mb-12 max-w-2xl"
+        >
+          <p className="mb-3 text-xs font-semibold tracking-[0.18em] text-cyan-400 uppercase">What I ship</p>
+          <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl">
+            Two lanes. One standard: production-ready.
+          </h2>
+          <p className="mt-4 text-base leading-relaxed text-zinc-400">
+            Web products people enjoy using, and contact-center systems that keep conversations flowing.
+          </p>
+        </motion.div>
+
+        <div className="grid gap-8 md:grid-cols-2">
+          {features.map((f, i) => (
+            <motion.article
+              key={f.title}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.08 }}
+              className="group overflow-hidden rounded-3xl border border-white/10 bg-zinc-900/80"
+            >
+              <div className="relative aspect-[16/10] overflow-hidden bg-zinc-950">
                 <Image
                   src={f.img}
                   alt={f.alt}
-                  width={360}
-                  height={220}
-                  className="rounded-xl object-cover shadow w-full h-full"
-                  loading="lazy"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover transition duration-700 group-hover:scale-[1.03]"
                 />
               </div>
-            </div>
-            <h3 className="relative z-30 text-2xl font-bold text-white mb-2 text-center group-hover:text-cyan-300 transition-colors tracking-tight">
-              {f.title}
-            </h3>
-            <p className="relative z-30 text-white/90 text-base text-center font-medium tracking-wide" style={{fontFamily:'Poppins, sans-serif'}}>{f.desc}</p>
-          </motion.div>
-        ))}
+              <div className="p-6 sm:p-8">
+                <h3 className="text-2xl font-bold tracking-tight text-white">{f.title}</h3>
+                <p className="mt-3 text-base leading-relaxed text-zinc-400">{f.desc}</p>
+              </div>
+            </motion.article>
+          ))}
+        </div>
       </div>
     </section>
   );

@@ -2,111 +2,83 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { FaBrain, FaComments, FaShieldAlt, FaRocket } from "react-icons/fa";
+import { FaComments, FaBolt, FaHeadset } from "react-icons/fa";
 import { AI_QUICK_PROMPTS } from "@/lib/portfolioAI";
 import PremiumButton from "@/components/PremiumButton";
 
-const features = [
-  {
-    icon: <FaBrain className="text-2xl text-cyan-400" />,
-    title: "Smart answers",
-    text: "Instant replies about skills, Amazon Connect, AWS, and projects.",
-  },
-  {
-    icon: <FaShieldAlt className="text-2xl text-orange-400" />,
-    title: "Cloud-ready",
-    text: "Highlights Amazon Connect, AWS Amplify, S3, Lambda, and more.",
-  },
-  {
-    icon: <FaRocket className="text-2xl text-purple-400" />,
-    title: "Hire-ready",
-    text: "Guides visitors to contact, demos, and collaboration options.",
-  },
+const points = [
+  { icon: <FaBolt className="text-cyan-400" />, title: "Instant answers", text: "Ask about skills, Amazon Connect, AWS, and projects — right on this page." },
+  { icon: <FaHeadset className="text-orange-400" />, title: "Human support too", text: "Amazon Connect live chat sits beside the AI when you need a real agent." },
+  { icon: <FaComments className="text-cyan-400" />, title: "Hire-ready path", text: "From question to contact in a few taps — demos, email, LinkedIn." },
 ];
 
 export default function AIShowcaseSection() {
-  const openAI = () => {
-    window.dispatchEvent(new CustomEvent("portfolio-ai-open"));
-  };
+  const openAI = () => window.dispatchEvent(new CustomEvent("portfolio-ai-open"));
 
   return (
-    <section
-      id="ai"
-      className="relative scroll-mt-28 overflow-hidden bg-black px-4 py-20 sm:px-8 sm:py-24"
-    >
-      <motion.div
-        className="pointer-events-none absolute left-1/2 top-1/2 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-500/10 blur-[100px]"
-        animate={{ scale: [1, 1.15, 1], opacity: [0.35, 0.55, 0.35] }}
-        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="pointer-events-none absolute right-[10%] top-[20%] h-48 w-48 rounded-full bg-purple-500/15 blur-[80px]"
-        animate={{ x: [0, 24, 0], y: [0, -16, 0] }}
-        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-      />
-
-      <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center gap-12">
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-          className="flex flex-col items-center gap-4 text-center"
-        >
-          <span className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-cyan-300">
-            <FaComments /> AI-powered portfolio
-          </span>
-          <h2 className="text-3xl font-bold text-white sm:text-4xl md:text-5xl">
-            Talk to{" "}
-            <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
-              Akash AI
-            </span>
-          </h2>
-          <p className="max-w-2xl text-base text-zinc-400 sm:text-lg">
-            An interactive assistant built into this portfolio — ask about web development, Amazon Connect,
-            AWS, or how to work together. No signup required.
-          </p>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="grid w-full gap-4 sm:grid-cols-3"
-        >
-          {features.map((f) => (
-            <div
-              key={f.title}
-              className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-sm transition-colors hover:border-cyan-500/25 hover:bg-white/[0.06]"
+    <section id="ai" className="scroll-mt-28 bg-zinc-950 px-4 py-20 sm:px-8 sm:py-24">
+      <div className="mx-auto max-w-6xl">
+        <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-br from-zinc-900 to-zinc-950 p-6 sm:p-10 md:p-12">
+          <div className="grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr]">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
             >
-              <motion.div className="mb-3">{f.icon}</motion.div>
-              <h3 className="mb-2 font-semibold text-white">{f.title}</h3>
-              <p className="text-sm leading-relaxed text-zinc-400">{f.text}</p>
-            </div>
-          ))}
-        </motion.div>
+              <p className="mb-3 text-xs font-semibold tracking-[0.18em] text-cyan-400 uppercase">
+                On-site assistant
+              </p>
+              <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl">
+                Talk to Akash AI.
+              </h2>
+              <p className="mt-4 max-w-xl text-base leading-relaxed text-zinc-400">
+                A lightweight guide trained on this portfolio — skills, Connect work, AWS cloud, and
+                how to collaborate.
+              </p>
+              <div className="mt-7 flex flex-wrap gap-3">
+                <PremiumButton type="button" variant="primary" size="lg" onClick={openAI}>
+                  Start AI chat
+                </PremiumButton>
+                <PremiumButton href="#projects" variant="outline" size="lg">
+                  Browse projects
+                </PremiumButton>
+              </div>
+              <div className="mt-6 flex flex-wrap gap-2">
+                {AI_QUICK_PROMPTS.map((prompt) => (
+                  <button
+                    key={prompt}
+                    type="button"
+                    onClick={openAI}
+                    className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-left text-xs font-medium text-zinc-400 transition hover:border-cyan-400/30 hover:text-cyan-300"
+                  >
+                    {prompt}
+                  </button>
+                ))}
+              </div>
+            </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, scale: 0.98 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.45, delay: 0.15 }}
-          className="w-full max-w-2xl rounded-2xl border border-cyan-500/20 bg-gradient-to-br from-zinc-900/90 to-black/90 p-6 shadow-xl shadow-cyan-500/5"
-        >
-          <p className="mb-4 text-center text-sm text-zinc-400">Try a quick prompt</p>
-          <div className="flex flex-wrap justify-center gap-2">
-            {AI_QUICK_PROMPTS.map((p) => (
-              <PremiumButton key={p} type="button" variant="ghost" size="sm" onClick={openAI}>
-                {p}
-              </PremiumButton>
-            ))}
+            <div className="grid gap-3">
+              {points.map((p, i) => (
+                <motion.div
+                  key={p.title}
+                  initial={{ opacity: 0, x: 16 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.08 }}
+                  className="flex gap-4 rounded-2xl border border-white/10 bg-white/[0.03] p-4"
+                >
+                  <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/5 text-lg">
+                    {p.icon}
+                  </span>
+                  <div>
+                    <p className="font-semibold text-white">{p.title}</p>
+                    <p className="mt-1 text-sm leading-relaxed text-zinc-400">{p.text}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </div>
-          <PremiumButton type="button" variant="primary" size="lg" className="mx-auto mt-6" onClick={openAI}>
-            <FaComments />
-            Start AI Chat
-          </PremiumButton>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

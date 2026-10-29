@@ -1,95 +1,70 @@
-/* Animated net/grid background */
-/* Faster and more visible animated net/grid background */
-.animated-net-bg {
-  background-color: #0a0a0a;
-  background-image:
-    linear-gradient(to right, rgba(255,255,255,0.13) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255,255,255,0.13) 1px, transparent 1px);
-  background-size: 48px 48px;
-  animation: netmove 6s linear infinite;
+@import "tailwindcss";
+
+:root {
+  --background: #05070c;
+  --foreground: #f4f7fb;
+  --font-lexend: "Lexend", system-ui, sans-serif;
 }
 
-
-@keyframes netmove {
-  0% {
-    background-position: 0 0, 0 0;
-  }
-  100% {
-    background-position: 48px 48px, 48px 48px;
-  }
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-lexend);
 }
 
+* {
+  box-sizing: border-box;
+}
 
-
-html, body {
-  min-height: 100%;
-  background: #111112;
-  font-family: 'Poppins', 'Inter', Arial, sans-serif;
+html {
   scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+}
+
+html,
+body {
+  min-height: 100%;
   max-width: 100vw;
   overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
-  scroll-padding-top: 64px;
 }
-
 
 body {
-  -webkit-tap-highlight-color: transparent;
-  scroll-behavior: smooth;
-  overflow-y: auto;
+  margin: 0;
+  color: #f4f7fb;
+  font-family: var(--font-lexend);
+  background:
+    radial-gradient(ellipse 80% 50% at 10% -10%, rgba(34, 211, 238, 0.12), transparent 55%),
+    radial-gradient(ellipse 60% 40% at 90% 0%, rgba(249, 115, 22, 0.08), transparent 50%),
+    #05070c;
+  -webkit-font-smoothing: antialiased;
 }
 
-
-
-body {
-  background: #0a0a0a;
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-  background-image:
-    linear-gradient(to right, rgba(255,255,255,0.07) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255,255,255,0.07) 1px, transparent 1px);
-  background-size: 48px 48px;
+a {
+  color: inherit;
+  text-decoration: none;
 }
 
-/* Premium buttons — site-wide */
-@keyframes premium-gradient {
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
+::selection {
+  background: rgba(34, 211, 238, 0.35);
+  color: #fff;
 }
 
-@keyframes premium-shine {
-  0% {
-    transform: translateX(-130%) skewX(-8deg);
-    opacity: 0;
-  }
-  50% {
-    opacity: 0.12;
-  }
-  100% {
-    transform: translateX(130%) skewX(-8deg);
-    opacity: 0;
-  }
-}
-
+/* Buttons */
 .premium-btn {
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  border-radius: 9999px;
+  border-radius: 0.9rem;
+  font-family: var(--font-lexend);
   font-weight: 600;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
   transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease,
-    border-color 0.25s ease,
-    background 0.25s ease;
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    background 0.22s ease,
+    border-color 0.22s ease;
   isolation: isolate;
 }
 
@@ -111,187 +86,79 @@ body {
   opacity: 0.55;
 }
 
-.premium-btn-glow {
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-  z-index: 0;
-}
-
+.premium-btn-glow,
 .premium-btn-shine {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    105deg,
-    transparent 42%,
-    rgba(34, 211, 238, 0.18) 50%,
-    transparent 58%
-  );
-  transform: translateX(-130%) skewX(-8deg);
-  pointer-events: none;
-  z-index: 1;
-  opacity: 0;
-}
-
-.premium-btn:hover:not(:disabled) .premium-btn-shine {
-  animation: premium-shine 0.9s ease forwards;
-}
-
-.premium-btn-no-shine .premium-btn-shine {
   display: none;
 }
 
 .premium-btn-primary {
-  color: #fff;
-  border: 1px solid rgba(34, 211, 238, 0.35);
-  background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 45%, #8b5cf6 100%);
-  background-size: 200% 200%;
-  box-shadow:
-    0 4px 24px rgba(6, 182, 212, 0.35),
-    inset 0 1px 0 rgba(34, 211, 238, 0.12);
-}
-
-.premium-btn-primary:hover:not(:disabled) {
-  animation: premium-gradient 4s ease infinite;
-  box-shadow:
-    0 8px 32px rgba(6, 182, 212, 0.45),
-    0 0 0 1px rgba(34, 211, 238, 0.25),
-    inset 0 1px 0 rgba(34, 211, 238, 0.15);
-}
-
-.premium-btn-primary .premium-btn-glow {
-  background: radial-gradient(circle at 50% 0%, rgba(34, 211, 238, 0.25), transparent 70%);
-}
-
-.premium-btn-primary:hover:not(:disabled) .premium-btn-glow {
-  opacity: 1;
+  color: #041016;
+  border: 1px solid transparent;
+  background: linear-gradient(135deg, #22d3ee 0%, #06b6d4 55%, #0891b2 100%);
+  box-shadow: 0 12px 28px rgba(6, 182, 212, 0.28);
 }
 
 .premium-btn-outline {
-  color: #e4e4e7;
+  color: #e2e8f0;
   border: 1px solid rgba(255, 255, 255, 0.18);
   background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(12px);
-  box-shadow:
-    0 4px 20px rgba(0, 0, 0, 0.35),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
 }
 
 .premium-btn-outline:hover:not(:disabled) {
-  color: #fff;
   border-color: rgba(34, 211, 238, 0.45);
   background: rgba(34, 211, 238, 0.08);
-  box-shadow:
-    0 8px 28px rgba(34, 211, 238, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  color: #fff;
 }
 
 .premium-btn-ghost {
   color: #a5f3fc;
-  border: 1px solid rgba(34, 211, 238, 0.2);
-  background: rgba(6, 182, 212, 0.06);
-}
-
-.premium-btn-ghost:hover:not(:disabled) {
-  color: #ecfeff;
-  border-color: rgba(34, 211, 238, 0.4);
-  background: rgba(6, 182, 212, 0.14);
-  box-shadow: 0 4px 16px rgba(6, 182, 212, 0.12);
+  border: 1px solid rgba(34, 211, 238, 0.22);
+  background: rgba(6, 182, 212, 0.08);
 }
 
 .premium-btn-accent {
   color: #fff;
-  border: 1px solid rgba(192, 132, 252, 0.4);
-  background: linear-gradient(135deg, #a855f7 0%, #7c3aed 50%, #6366f1 100%);
-  background-size: 200% 200%;
-  box-shadow:
-    0 4px 24px rgba(168, 85, 247, 0.35),
-    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  border: 1px solid transparent;
+  background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+  box-shadow: 0 12px 28px rgba(194, 65, 12, 0.28);
 }
 
-.premium-btn-accent:hover:not(:disabled) {
-  animation: premium-gradient 4s ease infinite;
-  box-shadow:
-    0 8px 32px rgba(168, 85, 247, 0.45),
-    inset 0 1px 0 rgba(167, 139, 250, 0.25);
+.marquee-track {
+  display: flex;
+  width: max-content;
+  gap: 3rem;
+  animation: marquee 28s linear infinite;
 }
 
-/* Skills section ambient background */
-@keyframes skills-orb-float {
-  0%,
-  100% {
-    transform: translate(0, 0) scale(1);
+.marquee-track-reverse {
+  display: flex;
+  width: max-content;
+  gap: 3rem;
+  animation: marquee-reverse 28s linear infinite;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
   }
-  33% {
-    transform: translate(24px, -18px) scale(1.06);
-  }
-  66% {
-    transform: translate(-16px, 12px) scale(0.96);
-  }
-}
-
-.skills-orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(70px);
-  opacity: 0.45;
-  animation: skills-orb-float 14s ease-in-out infinite;
-}
-
-.skills-orb-cyan {
-  top: 8%;
-  left: -8%;
-  width: 280px;
-  height: 280px;
-  background: radial-gradient(circle, rgba(6, 182, 212, 0.35) 0%, transparent 70%);
-}
-
-.skills-orb-purple {
-  top: 42%;
-  right: -6%;
-  width: 320px;
-  height: 320px;
-  background: radial-gradient(circle, rgba(139, 92, 246, 0.28) 0%, transparent 70%);
-  animation-delay: -5s;
-}
-
-.skills-orb-blue {
-  bottom: 6%;
-  left: 28%;
-  width: 240px;
-  height: 240px;
-  background: radial-gradient(circle, rgba(59, 130, 246, 0.22) 0%, transparent 70%);
-  animation-delay: -9s;
-}
-
-.skills-grid-fade {
-  background: radial-gradient(ellipse 80% 60% at 50% 50%, transparent 30%, #050509 100%);
-}
-@import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  to {
+    transform: translateX(-50%);
   }
 }
 
-body {
-  background: #0a0a0a;
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-  background-image:
-    linear-gradient(to right, rgba(255,255,255,0.07) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255,255,255,0.07) 1px, transparent 1px);
-  background-size: 48px 48px;
+@keyframes marquee-reverse {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track,
+  .marquee-track-reverse {
+    animation: none;
+  }
 }

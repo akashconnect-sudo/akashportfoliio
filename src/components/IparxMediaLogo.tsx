@@ -1,4 +1,5 @@
-import Image from "next/image";
+"use client";
+
 import { motion } from "framer-motion";
 
 export default function IparxMediaLogo() {
@@ -7,29 +8,15 @@ export default function IparxMediaLogo() {
       href="https://pexbit-media.vercel.app/"
       target="_blank"
       rel="noopener noreferrer"
-      initial={{ opacity: 0, scale: 0.8 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.7, type: "spring", stiffness: 60 }}
-      className="flex items-center gap-3 group justify-center w-full mx-auto text-center"
-      style={{ textDecoration: "none" }}
+      initial={{ opacity: 0, scale: 0.96 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true }}
+      className="flex items-center justify-center gap-3"
     >
-      <span
-        className="font-extrabold text-[2.8rem] md:text-[4rem] tracking-tight"
-        style={{
-          color: "#8b8bff", // Techy blue-purple
-          fontFamily: 'Geist, Inter, Arial, sans-serif',
-          letterSpacing: "-0.04em",
-        }}
-      >
+      <span className="text-[2.4rem] font-extrabold tracking-tight text-teal-700 md:text-[3.5rem]">
         PEXBIT
       </span>
-      <span
-        className="font-extrabold text-[2.8rem] md:text-[4rem] text-white group-hover:text-purple-400 transition-colors duration-200"
-        style={{
-          fontFamily: 'Geist, Inter, Arial, sans-serif',
-          letterSpacing: "-0.04em",
-        }}
-      >
+      <span className="text-[2.4rem] font-extrabold tracking-tight text-[var(--ink)] md:text-[3.5rem]">
         MEDIA
       </span>
     </motion.a>

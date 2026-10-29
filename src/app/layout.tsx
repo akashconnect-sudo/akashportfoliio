@@ -1,8 +1,6 @@
 "use client";
-// import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 
-
+import { Lexend } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import LoadingScreen from "@/components/LoadingScreen";
@@ -11,28 +9,22 @@ import AmazonConnectWidget from "@/components/AmazonConnectWidget";
 import useShowLoader from "@/hooks/useShowLoader";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const lexend = Lexend({
   subsets: ["latin"],
+  variable: "--font-lexend",
+  display: "swap",
+  weight: ["300", "400", "500", "600", "700", "800"],
 });
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const showLoader = useShowLoader();
+
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
-      <body className="min-h-full">
+    <html lang="en" className={`${lexend.variable} h-full`}>
+      <body className={`${lexend.className} site-shell min-h-full antialiased`}>
         {showLoader && <LoadingScreen />}
         <Navbar />
-        <main>
-          {!showLoader && children}
-        </main>
+        <main>{!showLoader && children}</main>
         <Footer />
         {!showLoader && <PortfolioAIChat />}
         <AmazonConnectWidget />

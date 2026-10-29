@@ -1,127 +1,78 @@
 "use client";
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence, useInView, useMotionValue, useSpring } from "framer-motion";
-import {
-  FaAws,
-  FaCopy,
-  FaLinkedin,
-  FaMapMarkerAlt,
-} from "react-icons/fa";
+import { AnimatePresence, motion, useInView, useMotionValue, useSpring } from "framer-motion";
+import { FaAws, FaCopy, FaDownload, FaLinkedin, FaMapMarkerAlt, FaPhoneAlt } from "react-icons/fa";
 import PremiumButton from "@/components/PremiumButton";
 
-const ease = [0.22, 1, 0.36, 1] as const;
-
-/** Real AWS services Akash works with — click to see actual use cases */
 const AWS_SERVICES = [
+  {
+    id: "connect",
+    name: "Amazon Connect",
+    detail:
+      "I set up cloud call centers — IVR menus, queues, agent routing, Lex chatbots, and live chat that connect to your CRM.",
+  },
   {
     id: "ec2",
     name: "EC2",
-    short: "Compute",
-    detail:
-      "Linux instances for app hosting — security groups, SSH access, Nginx + Node deployments, and environment setup for production workloads.",
-  },
-  {
-    id: "s3",
-    name: "S3",
-    short: "Storage",
-    detail:
-      "Bucket creation, object uploads, public/private ACLs, lifecycle rules, static asset hosting, and CloudFront origins for fast delivery.",
+    detail: "I host apps on AWS servers — security, SSH, Nginx, and Node.js deploys that stay online.",
   },
   {
     id: "lambda",
     name: "Lambda",
-    short: "Serverless",
-    detail:
-      "CRM + Connect automation — webhook handlers, EventBridge triggers, contact flow callbacks, and API integrations without managing servers.",
+    detail: "I write small cloud functions that auto-log calls into the CRM when someone dials or chats.",
   },
   {
     id: "rds",
-    name: "RDS",
-    short: "Database",
-    detail:
-      "PostgreSQL on RDS for SaaS apps — connection pooling, backups, security groups, and pairing with Prisma ORM in production.",
+    name: "RDS / PostgreSQL",
+    detail: "I design and run the database behind SaaS apps — leads, users, roles, and backups.",
+  },
+  {
+    id: "s3",
+    name: "S3",
+    detail: "I store images and files in secure buckets and serve them fast with CloudFront when needed.",
   },
   {
     id: "iam",
     name: "IAM",
-    short: "Security",
-    detail:
-      "Least-privilege policies for Connect, Lambda, and S3. Access keys for APIs, role-based permissions, and secure service-to-service auth.",
-  },
-  {
-    id: "eventbridge",
-    name: "EventBridge",
-    short: "Events",
-    detail:
-      "Event-driven workflows between Connect, Lambda, and CRM — routing contact events and automating downstream actions.",
-  },
-  {
-    id: "cloudwatch",
-    name: "CloudWatch",
-    short: "Monitoring",
-    detail:
-      "Logs, metrics, and alarms for Lambda functions and Connect integrations — debugging production issues before users notice.",
-  },
-  {
-    id: "amplify",
-    name: "Amplify",
-    short: "Deploy",
-    detail:
-      "Frontend hosting with CI/CD hooks, env vars, custom domains, and pairing with backend APIs on Vercel or AWS.",
-  },
-  {
-    id: "apigateway",
-    name: "API Gateway",
-    short: "APIs",
-    detail:
-      "REST endpoints in front of Lambda — throttling, API keys, and secure public interfaces for SaaS and Connect webhooks.",
-  },
-  {
-    id: "cognito",
-    name: "Cognito",
-    short: "Auth",
-    detail:
-      "User pools and identity for web apps — federated login patterns alongside Clerk/custom auth in full-stack projects.",
-  },
-  {
-    id: "cloudfront",
-    name: "CloudFront",
-    short: "CDN",
-    detail:
-      "CDN in front of S3 and web origins — cache policies, HTTPS, and lower latency for static assets and media.",
-  },
-  {
-    id: "connect",
-    name: "Connect",
-    short: "Contact Center",
-    detail:
-      "Contact flows, IVR, Lex V2, queues, chat, CCP — the core of CRM + support automation work at AR Group.",
+    detail: "I set who can access what on AWS — safe policies for Connect, Lambda, and storage.",
   },
 ];
 
 const WORK_LOG = [
   {
     when: "Now",
+    role: "Amazon Connect Engineer",
     what: "AR Group of Education",
-    note: "CRM SaaS, Connect IVR/Lex, 3× WordPress → Next.js migrations, Lambda hooks",
+    note: "I build the company’s cloud call center and CRM — callers hear IVR menus, agents get the right queue, and call events save into the CRM automatically.",
   },
   {
     when: "2026",
+    role: "Side project",
     what: "Nexiora AI",
-    note: "Evidence-first search, SSE streaming, Turborepo monorepo, Razorpay billing",
+    note: "An AI search platform that gives creators answers with sources — built with Next.js and TypeScript.",
   },
   {
     when: "2024–25",
-    what: "E-commerce & WordPress",
-    note: "Marketplace ops, SEO, custom themes — foundation before full-stack",
+    role: "Earlier roles",
+    what: "Web & e-commerce",
+    note: "WordPress sites, marketplace listings, SEO, and UI fixes — the foundation before full-stack and Connect work.",
   },
 ];
 
-const PRINCIPLES = [
-  "Ship to production, then polish — not the other way around.",
-  "Every API and contact flow should be debuggable at 2 AM.",
-  "WordPress got me started; Next.js + AWS is where I build now.",
+const PLAIN_POINTS = [
+  {
+    title: "What I do",
+    text: "I build websites and SaaS apps, and I set up Amazon Connect call centers so businesses can talk to customers by phone or chat.",
+  },
+  {
+    title: "Where I work",
+    text: "Full-time at AR Group of Education in Noida — CRM software, Amazon Connect, and AWS cloud.",
+  },
+  {
+    title: "How to reach me",
+    text: "Download my resume, open LinkedIn, or copy my email — same details as on my CV.",
+  },
 ];
 
 function AnimatedCounter({ value, suffix = "" }: { value: number; suffix?: string }) {
@@ -132,12 +83,10 @@ function AnimatedCounter({ value, suffix = "" }: { value: number; suffix?: strin
   const [display, setDisplay] = useState(0);
 
   useEffect(() => {
-    if (!inView) motionVal.set(value);
+    if (inView) motionVal.set(value);
   }, [inView, motionVal, value]);
 
-  useEffect(() => {
-    return spring.on("change", (v) => setDisplay(Math.round(v)));
-  }, [spring]);
+  useEffect(() => spring.on("change", (v) => setDisplay(Math.round(v))), [spring]);
 
   return (
     <span ref={ref} className="tabular-nums">
@@ -147,73 +96,10 @@ function AnimatedCounter({ value, suffix = "" }: { value: number; suffix?: strin
   );
 }
 
-function AwsCloudPanel() {
-  const [active, setActive] = useState("ec2");
-  const selected = AWS_SERVICES.find((s) => s.id === active) ?? AWS_SERVICES[0];
-
-  return (
-    <div className="rounded-2xl border border-sky-500/15 bg-[#0a0f14] p-5 sm:p-6">
-      <div className="mb-4 flex items-baseline justify-between gap-3">
-        <div>
-          <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-sky-500/80">
-            aws console
-          </p>
-          <h3 className="mt-1 text-lg font-semibold text-white">Cloud services I use</h3>
-        </div>
-        <FaAws className="text-2xl text-orange-400/90" />
-      </div>
-
-      <div className="mb-4 flex flex-wrap gap-1.5">
-        {AWS_SERVICES.map((svc) => (
-          <button
-            key={svc.id}
-            type="button"
-            onClick={() => setActive(svc.id)}
-            className={`rounded-md border px-2.5 py-1 font-mono text-[11px] transition ${
-              active === svc.id
-                ? "border-sky-400/50 bg-sky-500/15 text-sky-200"
-                : "border-white/8 bg-white/[0.03] text-zinc-500 hover:border-white/15 hover:text-zinc-300"
-            }`}
-          >
-            {svc.name}
-          </button>
-        ))}
-      </div>
-
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={selected.id}
-          initial={{ opacity: 0, y: 6 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -6 }}
-          transition={{ duration: 0.18 }}
-          className="rounded-xl border border-white/8 bg-black/40 p-4"
-        >
-          <div className="mb-2 flex items-center gap-2">
-            <span className="rounded bg-orange-500/20 px-2 py-0.5 font-mono text-xs font-bold text-orange-300">
-              {selected.name}
-            </span>
-            <span className="text-xs text-zinc-600">{selected.short}</span>
-          </div>
-          <p className="text-sm leading-relaxed text-zinc-400">{selected.detail}</p>
-        </motion.div>
-      </AnimatePresence>
-
-      <p className="mt-3 font-mono text-[10px] text-zinc-600">
-        + Route 53 · DynamoDB · Secrets Manager · SNS · VPC
-      </p>
-    </div>
-  );
-}
-
 export default function AboutSection() {
+  const [active, setActive] = useState("connect");
   const [copied, setCopied] = useState(false);
-  const [noteIdx, setNoteIdx] = useState(0);
-
-  useEffect(() => {
-    const id = setInterval(() => setNoteIdx((i) => (i + 1) % PRINCIPLES.length), 5000);
-    return () => clearInterval(id);
-  }, []);
+  const selected = AWS_SERVICES.find((s) => s.id === active) ?? AWS_SERVICES[0];
 
   const copyEmail = useCallback(async () => {
     try {
@@ -226,171 +112,177 @@ export default function AboutSection() {
   }, []);
 
   return (
-    <section
-      id="about"
-      className="relative scroll-mt-28 overflow-hidden border-t border-white/[0.04] bg-[#060608] px-4 py-20 sm:px-8 sm:py-24"
-    >
-      {/* subtle grid — not generic blobs */}
-      <div
-        className="pointer-events-none absolute inset-0 opacity-[0.035]"
-        style={{
-          backgroundImage:
-            "linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)",
-          backgroundSize: "48px 48px",
-        }}
-      />
-
-      <div className="relative z-10 mx-auto max-w-6xl">
-        {/* Header — left-aligned, human voice */}
+    <section id="about" className="scroll-mt-28 bg-zinc-950 px-4 py-20 sm:px-8 sm:py-24">
+      <div className="mx-auto max-w-6xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.5, ease }}
-          className="mb-12 max-w-3xl md:mb-14"
+          viewport={{ once: true }}
+          className="mb-10 max-w-3xl"
         >
-          <p className="mb-3 flex items-center gap-2 font-mono text-xs text-zinc-600">
-            <FaMapMarkerAlt className="text-zinc-500" />
-            Noida, India · BCA 2025 · Software Engineer
+          <p className="mb-3 flex flex-wrap items-center gap-2 text-xs font-semibold tracking-[0.18em] text-cyan-400 uppercase">
+            <FaMapMarkerAlt className="shrink-0" />
+            <span>Noida · BCA 2025 · Amazon Connect Developer</span>
           </p>
-          <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-[2.75rem] md:leading-tight">
-            I build web apps, contact centers,
-            <span className="text-zinc-500"> and </span>
-            AI tools that run in production.
+          <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl">
+            I help businesses run websites and cloud call centers.
           </h2>
-          <p className="mt-5 text-base leading-[1.75] text-zinc-400 md:text-lg">
-            Started with WordPress and e-commerce — product listings, SEO, the usual grind.
-            Now at{" "}
-            <span className="text-zinc-200">AR Group of Education</span>, I work on CRM SaaS,
-            Amazon Connect (IVR, Lex, live chat), and AWS — EC2 instances, S3 buckets, Lambda,
-            RDS, IAM, CloudWatch. Side project:{" "}
-            <span className="text-zinc-200">Nexiora AI</span>, an evidence-first research platform.
+          <p className="mt-5 text-base leading-relaxed text-zinc-400 sm:text-lg">
+            Simple version: I write full-stack web apps (Next.js + TypeScript), and I configure{" "}
+            <span className="font-medium text-zinc-200">Amazon Connect</span> — the phone/chat system
+            on AWS. At AR Group of Education I ship CRM software, IVR menus, agent queues, and AWS
+            cloud setup so customers and agents stay connected.
           </p>
+
+          <div className="mt-7 flex flex-wrap gap-3">
+            <a
+              href="/Akash_Pandey_Resume.pdf"
+              download="Akash_Pandey_Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="premium-btn premium-btn-accent px-6 py-2.5 text-sm sm:text-base"
+            >
+              <span className="relative z-10 inline-flex items-center gap-2">
+                <FaDownload />
+                Download Resume
+              </span>
+            </a>
+            <PremiumButton href="https://www.linkedin.com/in/akash-pandey-5b9494315" variant="primary" size="md">
+              <FaLinkedin />
+              LinkedIn
+            </PremiumButton>
+            <button
+              type="button"
+              onClick={() => void copyEmail()}
+              className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/5 px-5 py-2.5 text-sm font-semibold text-zinc-200 transition hover:border-cyan-400/40 hover:text-cyan-200"
+            >
+              <FaCopy className="text-xs" />
+              {copied ? "Email copied" : "Copy email"}
+            </button>
+          </div>
         </motion.div>
 
-        <div className="grid gap-8 lg:grid-cols-2 lg:gap-10">
-          {/* Left — story + work log */}
-          <div className="space-y-6">
+        <div className="mb-8 grid gap-4 sm:grid-cols-3">
+          {PLAIN_POINTS.map((point, i) => (
             <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.45, ease }}
-              className="rounded-2xl border border-white/[0.07] bg-white/[0.02] p-5 sm:p-6"
-            >
-              <p className="font-mono text-[10px] uppercase tracking-widest text-zinc-600">
-                rotating note
-              </p>
-              <AnimatePresence mode="wait">
-                <motion.p
-                  key={noteIdx}
-                  initial={{ opacity: 0, x: -8 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 8 }}
-                  transition={{ duration: 0.3 }}
-                  className="mt-3 text-base italic leading-relaxed text-zinc-300"
-                >
-                  &ldquo;{PRINCIPLES[noteIdx]}&rdquo;
-                </motion.p>
-              </AnimatePresence>
-
-              <ul className="mt-6 space-y-3 border-t border-white/[0.06] pt-6">
-                {WORK_LOG.map((entry) => (
-                  <li key={entry.what} className="flex gap-4">
-                    <span className="w-14 shrink-0 font-mono text-xs text-cyan-600/90 pt-0.5">
-                      {entry.when}
-                    </span>
-                    <div>
-                      <p className="font-medium text-zinc-200">{entry.what}</p>
-                      <p className="mt-0.5 text-sm text-zinc-500">{entry.note}</p>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-
-            <motion.div
+              key={point.title}
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.45, ease, delay: 0.06 }}
-              className="grid grid-cols-3 gap-3"
+              transition={{ delay: i * 0.06 }}
+              className="rounded-2xl border border-white/10 bg-white/[0.03] p-5"
             >
+              <p className="text-xs font-semibold tracking-[0.16em] text-cyan-400 uppercase">{point.title}</p>
+              <p className="mt-2 text-sm leading-relaxed text-zinc-300">{point.text}</p>
+            </motion.div>
+          ))}
+        </div>
+
+        <div className="grid gap-8 lg:grid-cols-2">
+          <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-6 sm:p-8">
+            <div className="mb-2 flex items-center gap-2">
+              <FaPhoneAlt className="text-cyan-400" />
+              <p className="text-xs font-semibold tracking-[0.18em] text-zinc-500 uppercase">My journey</p>
+            </div>
+            <p className="mb-6 text-sm text-zinc-500">Read top to bottom — newest work first.</p>
+            <ul className="space-y-5">
+              {WORK_LOG.map((entry) => (
+                <li key={entry.what} className="flex gap-4 border-b border-white/10 pb-5 last:border-0 last:pb-0">
+                  <span className="w-14 shrink-0 pt-0.5 font-mono text-xs text-cyan-400">{entry.when}</span>
+                  <div>
+                    <p className="text-xs font-medium text-orange-300/90">{entry.role}</p>
+                    <p className="mt-0.5 font-semibold text-white">{entry.what}</p>
+                    <p className="mt-1.5 text-sm leading-relaxed text-zinc-400">{entry.note}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+            <div className="mt-8 grid grid-cols-3 gap-3">
               {[
-                { n: 20, s: "+", l: "months coding professionally" },
-                { n: 8, s: "+", l: "projects shipped" },
-                { n: 3, s: "", l: "WP → Next.js migrations" },
+                { n: 20, s: "+", l: "months shipping" },
+                { n: 8, s: "+", l: "projects live" },
+                { n: 15, s: "", l: "Connect agents set up" },
               ].map((stat) => (
-                <div
-                  key={stat.l}
-                  className="rounded-xl border border-white/[0.06] bg-black/30 px-3 py-4 text-center"
-                >
+                <div key={stat.l} className="rounded-2xl border border-white/10 bg-black/30 px-3 py-4 text-center">
                   <p className="text-2xl font-bold text-white">
                     <AnimatedCounter value={stat.n} suffix={stat.s} />
                   </p>
-                  <p className="mt-1 text-[10px] leading-snug text-zinc-600">{stat.l}</p>
+                  <p className="mt-1 text-[10px] leading-snug text-zinc-500">{stat.l}</p>
                 </div>
               ))}
-            </motion.div>
+            </div>
           </div>
 
-          {/* Right — AWS panel + cert + connect */}
-          <div className="space-y-6">
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.15 }}
-              transition={{ duration: 0.45, ease, delay: 0.04 }}
-            >
-              <AwsCloudPanel />
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.08, duration: 0.45, ease }}
-              className="flex flex-col gap-4 rounded-2xl border border-orange-500/15 bg-orange-950/20 p-5 sm:flex-row sm:items-center sm:justify-between"
-            >
-              <div>
-                <p className="font-mono text-[10px] uppercase tracking-wider text-orange-500/70">
-                  AWS Certified
-                </p>
-                <p className="mt-1 font-semibold text-white">Amazon Connect Developer</p>
-                <p className="text-sm text-zinc-500">Jul 2026 · Credly verified</p>
+          <div className="space-y-5">
+            <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-6 sm:p-7">
+              <div className="mb-4 flex items-center justify-between gap-3">
+                <div>
+                  <p className="text-xs font-semibold tracking-[0.18em] text-cyan-400 uppercase">AWS tools</p>
+                  <h3 className="mt-1 text-lg font-bold text-white">Tap a name to see what I use it for</h3>
+                </div>
+                <FaAws className="shrink-0 text-2xl text-orange-400" />
               </div>
-              <span className="self-start rounded-lg border border-orange-500/25 bg-orange-500/10 px-3 py-1.5 font-mono text-xs text-orange-300 sm:self-center">
+              <div className="mb-4 flex flex-wrap gap-1.5">
+                {AWS_SERVICES.map((svc) => (
+                  <button
+                    key={svc.id}
+                    type="button"
+                    onClick={() => setActive(svc.id)}
+                    className={`rounded-lg border px-2.5 py-1 text-[11px] font-semibold transition ${
+                      active === svc.id
+                        ? "border-cyan-400/40 bg-cyan-400/10 text-cyan-300"
+                        : "border-white/10 bg-white/5 text-zinc-500 hover:text-zinc-300"
+                    }`}
+                  >
+                    {svc.name}
+                  </button>
+                ))}
+              </div>
+              <AnimatePresence mode="wait">
+                <motion.p
+                  key={selected.id}
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -6 }}
+                  className="rounded-xl border border-white/10 bg-black/30 p-4 text-sm leading-relaxed text-zinc-300"
+                >
+                  <span className="mr-2 font-bold text-cyan-300">{selected.name}</span>
+                  {selected.detail}
+                </motion.p>
+              </AnimatePresence>
+            </div>
+
+            <div className="flex flex-col gap-3 rounded-3xl border border-orange-500/20 bg-orange-500/10 p-5 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <p className="text-xs font-semibold tracking-wider text-orange-300 uppercase">AWS Certified</p>
+                <p className="mt-1 font-semibold text-white">Amazon Connect Developer</p>
+                <p className="mt-1 text-xs text-orange-200/70">Training badge · Jul 2026</p>
+              </div>
+              <span className="self-start rounded-lg border border-orange-400/30 bg-black/20 px-3 py-1.5 text-xs font-semibold text-orange-300 sm:self-center">
                 connect + cloud
               </span>
-            </motion.div>
+            </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1, duration: 0.45, ease }}
-              className="flex flex-wrap gap-2"
-            >
-              <PremiumButton
-                href="https://www.linkedin.com/in/akash-pandey-5b9494315"
-                variant="primary"
-                size="sm"
+            <div className="flex flex-wrap gap-2">
+              <a
+                href="/Akash_Pandey_Resume.pdf"
+                download="Akash_Pandey_Resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="premium-btn premium-btn-outline px-4 py-2 text-xs sm:text-sm"
               >
-                <FaLinkedin />
-                LinkedIn
+                <span className="relative z-10 inline-flex items-center gap-2">
+                  <FaDownload />
+                  Resume PDF
+                </span>
+              </a>
+              <PremiumButton href="#skills" variant="ghost" size="sm">
+                See skills
               </PremiumButton>
-              <button
-                type="button"
-                onClick={() => void copyEmail()}
-                className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] px-4 py-2 text-sm text-zinc-300 transition hover:border-white/20 hover:text-white"
-              >
-                <FaCopy className="text-xs" />
-                {copied ? "Copied" : "pandeyakash85296@gmail.com"}
-              </button>
-              <PremiumButton href="#skills" variant="outline" size="sm">
-                See all skills
+              <PremiumButton href="#projects" variant="ghost" size="sm">
+                See projects
               </PremiumButton>
-            </motion.div>
+            </div>
           </div>
         </div>
       </div>

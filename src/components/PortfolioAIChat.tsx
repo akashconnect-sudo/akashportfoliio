@@ -15,16 +15,16 @@ const WELCOME: ChatMessage = {
 
 export default function PortfolioAIChat() {
   const [open, setOpen] = useState(false);
+  const [input, setInput] = useState("");
+  const [messages, setMessages] = useState<ChatMessage[]>([WELCOME]);
+  const [typing, setTyping] = useState(false);
+  const listRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const onOpen = () => setOpen(true);
     window.addEventListener("portfolio-ai-open", onOpen);
     return () => window.removeEventListener("portfolio-ai-open", onOpen);
   }, []);
-  const [input, setInput] = useState("");
-  const [messages, setMessages] = useState<ChatMessage[]>([WELCOME]);
-  const [typing, setTyping] = useState(false);
-  const listRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     listRef.current?.scrollTo({ top: listRef.current.scrollHeight, behavior: "smooth" });
@@ -39,12 +39,10 @@ export default function PortfolioAIChat() {
   const send = (text: string) => {
     const trimmed = text.trim();
     if (!trimmed || typing) return;
-
     setMessages((m) => [...m, { role: "user", content: trimmed }]);
     setInput("");
     setTyping(true);
     notifyOwner(trimmed);
-
     window.setTimeout(() => {
       setMessages((m) => [...m, { role: "assistant", content: getPortfolioAIReply(trimmed) }]);
       setTyping(false);
@@ -59,66 +57,55 @@ export default function PortfolioAIChat() {
             initial={{ opacity: 0, y: 16, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 12, scale: 0.96 }}
-            transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed bottom-24 left-4 z-[70] flex h-[min(520px,72vh)] w-[min(400px,calc(100vw-2rem))] flex-col overflow-hidden rounded-2xl border border-cyan-500/25 bg-zinc-950/95 shadow-2xl shadow-cyan-500/10 backdrop-blur-xl sm:left-6"
+            className="fixed bottom-24 left-4 z-[70] flex h-[min(520px,72vh)] w-[min(400px,calc(100vw-2rem))] flex-col overflow-hidden rounded-2xl border border-cyan-500/25 bg-zinc-950 shadow-2xl sm:left-6"
           >
-            <header className="flex items-center justify-between border-b border-white/10 bg-gradient-to-r from-cyan-950/80 to-purple-950/60 px-4 py-3">
-              <motion.div
-                className="flex items-center gap-2"
-                animate={{ opacity: [0.85, 1, 0.85] }}
-                transition={{ duration: 2.2, repeat: Infinity }}
-              >
-                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-cyan-400 to-purple-500 text-white">
+            <header className="flex items-center justify-between border-b border-white/10 bg-gradient-to-r from-cyan-950 to-zinc-900 px-4 py-3">
+              <div className="flex items-center gap-2">
+                <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-cyan-400 text-zinc-950">
                   <FaRobot />
                 </span>
                 <div>
                   <p className="text-sm font-bold text-white">Akash AI</p>
-                  <p className="text-xs text-cyan-300/90">Portfolio assistant · online</p>
+                  <p className="text-xs text-cyan-300">Portfolio assistant · online</p>
                 </div>
-              </motion.div>
+              </div>
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                className="rounded-lg p-2 text-zinc-400 transition-colors hover:bg-white/10 hover:text-white"
+                className="rounded-lg p-2 text-zinc-400 hover:bg-white/10 hover:text-white"
                 aria-label="Close chat"
               >
                 <FaTimes />
               </button>
             </header>
 
-            <motion.div ref={listRef} className="flex-1 space-y-3 overflow-y-auto px-3 py-4">
+            <div ref={listRef} className="flex-1 space-y-3 overflow-y-auto px-3 py-4">
               {messages.map((msg, i) => (
-                <motion.div
+                <div
                   key={`${msg.role}-${i}-${msg.content.slice(0, 12)}`}
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
                   className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
                 >
                   <div
                     className={`max-w-[88%] whitespace-pre-wrap rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed ${
                       msg.role === "user"
-                        ? "bg-gradient-to-r from-cyan-600 to-blue-600 text-white"
+                        ? "bg-cyan-500 text-zinc-950"
                         : "border border-white/10 bg-white/5 text-zinc-200"
                     }`}
                   >
                     {msg.content}
                   </div>
-                </motion.div>
+                </div>
               ))}
               {typing && (
                 <div className="flex justify-start">
-                  <motion.div
-                    className="flex gap-1 rounded-2xl border border-white/10 bg-white/5 px-4 py-3"
-                    animate={{ opacity: [0.5, 1, 0.5] }}
-                    transition={{ repeat: Infinity, duration: 1 }}
-                  >
-                    <span className="h-2 w-2 rounded-full bg-cyan-400" />
-                    <span className="h-2 w-2 rounded-full bg-cyan-400" />
-                    <span className="h-2 w-2 rounded-full bg-cyan-400" />
-                  </motion.div>
+                  <div className="flex gap-1 rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
+                    <span className="h-2 w-2 animate-pulse rounded-full bg-cyan-400" />
+                    <span className="h-2 w-2 animate-pulse rounded-full bg-cyan-400 [animation-delay:150ms]" />
+                    <span className="h-2 w-2 animate-pulse rounded-full bg-cyan-400 [animation-delay:300ms]" />
+                  </div>
                 </div>
               )}
-            </motion.div>
+            </div>
 
             <div className="border-t border-white/10 px-3 py-2">
               <div className="mb-2 flex flex-wrap gap-1.5">
@@ -145,7 +132,7 @@ export default function PortfolioAIChat() {
                 <input
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  placeholder="Ask about skills, projects, AWS cloud…"
+                  placeholder="Ask about skills, projects, AWS…"
                   className="flex-1 rounded-xl border border-white/10 bg-black/50 px-3 py-2.5 text-sm text-white outline-none placeholder:text-zinc-500 focus:border-cyan-500/50"
                 />
                 <PremiumButton
@@ -164,24 +151,18 @@ export default function PortfolioAIChat() {
         )}
       </AnimatePresence>
 
-      <motion.div className="fixed bottom-6 left-4 z-[70] sm:left-6">
+      <div className="fixed bottom-6 left-4 z-[70] sm:left-6">
         <PremiumButton
           type="button"
           variant="primary"
           size="md"
-          className="shadow-lg shadow-cyan-500/25"
           onClick={() => setOpen((o) => !o)}
           aria-label={open ? "Close AI assistant" : "Open AI assistant"}
         >
-          <motion.span
-            className="absolute inset-0 rounded-full bg-cyan-400/30"
-            animate={{ scale: [1, 1.35, 1], opacity: [0.45, 0, 0.45] }}
-            transition={{ duration: 2.2, repeat: Infinity }}
-          />
-          <FaRobot className="relative z-10 text-lg" />
-          <span className="relative z-10 hidden sm:inline">{open ? "Close AI" : "Ask AI"}</span>
+          <FaRobot className="text-lg" />
+          <span className="hidden sm:inline">{open ? "Close AI" : "Ask AI"}</span>
         </PremiumButton>
-      </motion.div>
+      </div>
     </>
   );
 }

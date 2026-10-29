@@ -1,60 +1,37 @@
 "use client";
-import { motion } from "framer-motion";
-import { FaGithub, FaLinkedin, FaTwitter, FaEnvelope } from "react-icons/fa";
+
+import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
 
 const socialLinks = [
-  {
-    href: "https://github.com/akashconnect-sudo/",
-    icon: <FaGithub size={24} />,
-    label: "GitHub",
-  },
-  {
-    href: "https://www.linkedin.com/in/akash-pandey-5b9494315",
-    icon: <FaLinkedin size={24} />,
-    label: "LinkedIn",
-  },
-  {
-    href: "mailto:pandeyakash85296@gmail.com",
-    icon: <FaEnvelope size={24} />,
-    label: "Email",
-  },
+  { href: "https://github.com/akashconnect-sudo/", icon: <FaGithub size={20} />, label: "GitHub" },
+  { href: "https://www.linkedin.com/in/akash-pandey-5b9494315", icon: <FaLinkedin size={20} />, label: "LinkedIn" },
+  { href: "mailto:pandeyakash85296@gmail.com", icon: <FaEnvelope size={20} />, label: "Email" },
 ];
 
 export default function Footer() {
   return (
-    <motion.footer
-      initial={{ y: 100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ type: "spring", stiffness: 60, damping: 12 }}
-      className="w-full mt-16 flex flex-col items-center justify-center py-6 px-2 sm:py-8 sm:px-4 bg-white/10 backdrop-blur-lg rounded-t-3xl shadow-2xl border-t border-white/20"
-    >
-      <motion.div
-        initial={{ scale: 0.8, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ delay: 0.2, type: "spring", stiffness: 80 }}
-        className="flex gap-4 sm:gap-6 mb-3 sm:mb-4"
-      >
-        {socialLinks.map((link) => (
-          <a
-            key={link.label}
-            href={link.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={link.label}
-            className="transition-transform hover:scale-125 hover:text-purple-500 text-white/80 text-[22px] sm:text-[24px]"
-          >
-            {link.icon}
-          </a>
-        ))}
-      </motion.div>
-      <motion.p
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.4 }}
-        className="text-xs sm:text-sm text-white/70 text-center"
-      >
-        &copy; {new Date().getFullYear()} Akash. All rights reserved.
-      </motion.p>
-    </motion.footer>
+    <footer className="border-t border-white/10 bg-zinc-950 px-4 py-10 sm:px-6">
+      <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-6 text-center">
+        <p className="text-2xl font-bold tracking-tight text-white">Akash</p>
+        <p className="max-w-md text-sm text-zinc-400">
+          Software Engineer · Amazon Connect · AWS · Building systems that connect people.
+        </p>
+        <div className="flex gap-3">
+          {socialLinks.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              target={link.href.startsWith("http") ? "_blank" : undefined}
+              rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
+              aria-label={link.label}
+              className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/15 bg-white/5 text-zinc-200 transition hover:border-cyan-400/40 hover:text-cyan-300"
+            >
+              {link.icon}
+            </a>
+          ))}
+        </div>
+        <p className="text-xs text-zinc-600">&copy; {new Date().getFullYear()} Akash. All rights reserved.</p>
+      </div>
+    </footer>
   );
 }
